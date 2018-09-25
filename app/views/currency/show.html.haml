@@ -1,0 +1,21 @@
+%h3 Welcome.
+
+= form_tag convert_url, remote: true do
+  .row
+    .form-group
+      = label_tag 'From', class: 'control-label'
+      = select_tag :from, options_for_select(@currencies)
+    .form-group
+      = label_tag 'Input'
+      = number_field_tag :input, 1, min: 1
+  .row
+    .form-group
+      = label_tag 'To'
+      = select_tag :to, options_for_select(@currencies)
+  .row
+    .form-group
+      = button_tag 'Convert', class: 'btn btn-default'
+
+%div#result
+  The converted value => 
+  %span#resultant_value
