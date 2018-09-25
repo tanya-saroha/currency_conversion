@@ -249,8 +249,8 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
-  haml-rails (~> 1.0)
   dotenv-rails
+  haml-rails (~> 1.0)
   httparty
   jbuilder (~> 2.5)
   jquery-rails

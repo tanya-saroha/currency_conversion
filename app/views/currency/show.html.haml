@@ -3,7 +3,7 @@
 = form_tag convert_url, remote: true do
   .row
     .form-group
-      = label_tag 'From', class: 'control-label'
+      = label_tag 'From'
       = select_tag :from, options_for_select(@currencies)
     .form-group
       = label_tag 'Input'
