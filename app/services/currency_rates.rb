@@ -2,11 +2,11 @@ class CurrencyRates
   attr_accessor :base_currency, :target_currency
 
   def self.latest
-    OpenStruct.new(HTTParty.get('https://api.exchangeratesapi.io/latest'))
+    OpenStruct.new(HTTParty.get(ENV["CURRENCY_EXCHANGE_BASE_URL"] + '/latest'))
   end
 
   def self.history(date)
-    OpenStruct.new(HTTParty.get("https://api.exchangeratesapi.io/#{date.to_s}"))
+    OpenStruct.new(HTTParty.get(ENV["CURRENCY_EXCHANGE_BASE_URL"] + "/#{date.to_s}"))
   rescue URI::InvalidURIError
     { error: "Bad URI", reason: "Invalid date object passed" }
   end
@@ -17,7 +17,8 @@ class CurrencyRates
   end
 
   def get
-    return OpenStruct.new(HTTParty.get("https://api.exchangeratesapi.io/latest?base=#{base_currency}")) if target_currency.blank?
-    OpenStruct.new(HTTParty.get("https://api.exchangeratesapi.io/latest?symbols=#{base_currency},#{target_currency}"))
+    return OpenStruct.new(HTTParty.get(ENV["CURRENCY_EXCHANGE_BASE_URL"] + "/latest?base=#{base_currency}")) if target_currency.blank?
+    result = OpenStruct.new(HTTParty.get(ENV["CURRENCY_EXCHANGE_BASE_URL"] + "/latest?base=#{base_currency}")).rates["#{target_currency}"]
+    OpenStruct.new({ base: base_currency, rates: { "#{target_currency}": result } }.with_indifferent_access)
   end
 end
